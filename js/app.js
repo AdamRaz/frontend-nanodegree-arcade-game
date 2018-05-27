@@ -34,7 +34,9 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 
-
+// function resetYPosition() {
+//     this.y = 400;
+// }
 
 var Player = function() {
     // Variables applied to each of our instances go here,
@@ -46,6 +48,11 @@ var Player = function() {
     this.x = 200;
     this.y = 400;
     this.speed = 1;
+
+    // this.resetY = function () {
+    //     this.y = 400;
+    // }
+
 };
 
 // Update the players's position, required method for game
@@ -54,11 +61,35 @@ Player.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-    if (this.y < -30) {
-        this.y = 400;
+    if (this.y < -15 ) {
+        // console.log(this);
+        // setTimeout((function() {this.y = 400;}).call(this), 2500);
         // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), should set a 500ms timeout or so before resetting
+       if (playerStart === 1) {
+        setTimeout(reachGoal, 500);
+        playerStart = 0;
+       }
+        // this.resetplayer.call(this);
+
+        // AR - the function here must be a reference, without () else will be executed instantly
     }
+    
+    checkCollision();
+
 };
+
+// Player.prototype.resetplayer = function () {
+//     setTimeout(this.resetThisplayer, 1500);
+// }
+
+
+// Player.prototype.resetThisplayer = function () {
+//     this.y = 400;
+//     console.log("resetting player")
+// }
+
+
+
 
 // Draw the player on the screen, required method for game
 Player.prototype.render = function() {
@@ -69,7 +100,7 @@ Player.prototype.handleInput = function(keyPress) {
     // console.log(`keypress is ${keyPress}`);
     if (keyPress === 'up' && this.y > -15) {
         this.y -= 85;
-        console.log(`player y is ${this.y}`);
+        // console.log(`player y is ${this.y}`);
     }
     if (keyPress === 'down'&& this.y < 400) {
         this.y += 85;
@@ -100,6 +131,48 @@ enemy3.speed = 110;
 let allEnemies = [enemy1, enemy2, enemy3];
 // Place the player object in a variable called player
 let player = new Player();
+let playerStart = 1;
+let goalScore = 0;
+let bugScore = 0;
+let textUpdate = 1;
+let goalMessage = document.querySelector('.goal-message');
+let collisionMessage = document.querySelector('.collision-message');
+
+function resetMainPlayer() {
+    player.y = 400;
+    textUpdate = 1;
+    playerStart = 1
+}
+
+function checkCollision() {
+    allEnemies.forEach(function(enemy) {
+        if (Math.abs(player.y - enemy.y) < 20) {
+            if (Math.abs(player.x - enemy.x) < 60) {
+                bugCollision();
+            }
+        }
+    });
+}
+
+function reachGoal() {
+    if (textUpdate === 1) {
+        textUpdate = 0;
+        goalScore++;
+        goalMessage.textContent=`achieved happiness ${goalScore} time(s)!`;
+    }
+    resetMainPlayer();
+}
+
+function bugCollision() {
+    if (textUpdate === 1) {
+        textUpdate = 0;
+        bugScore++;
+        collisionMessage.textContent=`The bugs got you ${bugScore} time(s)!`;
+    }
+    resetMainPlayer();
+
+}
+
 
 
 
