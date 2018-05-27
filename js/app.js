@@ -1,8 +1,5 @@
 // Enemies our player must avoid
 var Enemy = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -29,19 +26,8 @@ Enemy.prototype.render = function() {
     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
-
-
-// function resetYPosition() {
-//     this.y = 400;
-// }
 
 var Player = function() {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
-
     // The image/sprite for our player, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/char-boy.png';
@@ -49,11 +35,6 @@ var Player = function() {
     this.y = 400;
     // AR - x and y starting coordinates, places player at bottom centre of grid.
     this.speed = 1;
-
-    // this.resetY = function () {
-    //     this.y = 400;
-    // }
-
 };
 
 // Update the players's position, required method for game
@@ -64,39 +45,17 @@ Player.prototype.update = function(dt) {
     // all computers.
     if (this.y < -15 ) {
         //AR - this y coordinate corresponds to the top row of the play grid
-
-
-        // console.log(this);
-        // setTimeout((function() {this.y = 400;}).call(this), 2500);
-        // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), should set a 500ms timeout or so before resetting
+       // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), we set a 500ms timeout before resetting so player can see themselves enter the water area before they teleport back to the start
        if (playerStart === 1) {
         setTimeout(reachGoal, 500);
         playerStart = 0;
        }
        // AR - wrapping the timeout inside an if block here prevents the inner reachGoal function from being called multiple times in a row while the player position has yet to be reset
-
-
-
-        // this.resetplayer.call(this);
-
-        // AR - the function here must be a reference, without () else will be executed instantly
+       // AR - the function here must be a reference, without () else will be executed instantly
     }
     
     checkCollision();
-
 };
-
-// Player.prototype.resetplayer = function () {
-//     setTimeout(this.resetThisplayer, 1500);
-// }
-
-
-// Player.prototype.resetThisplayer = function () {
-//     this.y = 400;
-//     console.log("resetting player")
-// }
-
-
 
 
 // Draw the player on the screen, required method for game
@@ -105,10 +64,8 @@ Player.prototype.render = function() {
 };
 
 Player.prototype.handleInput = function(keyPress) {
-    // console.log(`keypress is ${keyPress}`);
     if (keyPress === 'up' && this.y > -15) {
         this.y -= 85;
-        // console.log(`player y is ${this.y}`);
     }
     if (keyPress === 'down'&& this.y < 400) {
         this.y += 85;
@@ -119,15 +76,12 @@ Player.prototype.handleInput = function(keyPress) {
     if (keyPress === 'right' && this.x < 400) {
         this.x += 100;
     }
-    // AR - the AND && conditionals prevent the player from moving off the grid
+    // AR - the AND '&&' conditionals prevent the player from moving off the grid
 };
-
-
 
 
 // Now instantiate your objects.
 let enemy1 = new Enemy();
-console.log(enemy1);
 let enemy2 = new Enemy();
 enemy2.x = 100;
 enemy2.y = 130;
@@ -148,6 +102,7 @@ let goalMessage = document.querySelector('.goal-message');
 let collisionMessage = document.querySelector('.collision-message');
 
 function resetMainPlayer() {
+    player.x = 200;
     player.y = 400;
     textUpdate = 1;
     playerStart = 1
@@ -160,7 +115,7 @@ function checkCollision() {
                 bugCollision();
             }
         }
-        // AR - collition detection here, with a vertical/horizontal range of collision so a rectangular 'hit box' is formed
+        // AR - collision detection here, with a vertical/horizontal range of collision so a rectangular 'hit box' is formed around each enemy bug
     });
 }
 
@@ -169,8 +124,9 @@ function reachGoal() {
     if (textUpdate === 1) {
         textUpdate = 0;
         goalScore++;
-        goalMessage.textContent=`achieved happiness ${goalScore} time(s)!`;
+        goalMessage.textContent=`Achieved happiness ${goalScore} time(s)!`;
     }
+    
     resetMainPlayer();
 }
 
@@ -181,12 +137,9 @@ function bugCollision() {
         bugScore++;
         collisionMessage.textContent=`The bugs got you ${bugScore} time(s)!`;
     }
+    
     resetMainPlayer();
-
 }
-
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.

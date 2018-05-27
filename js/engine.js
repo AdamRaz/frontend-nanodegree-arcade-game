@@ -44,10 +44,8 @@ var Engine = (function(global) {
         /* Call our update/render functions, pass along the time delta to
          * our update function since it may be used for smooth animation.
          */
-        // console.log("update and render");
         update(dt);
         render();
-        // console.log("complete update and render");
 
         /* Set our lastTime variable which is used to determine the time delta
          * for the next time this function is called.
@@ -122,7 +120,6 @@ var Engine = (function(global) {
         
         // Before drawing, clear existing canvas
         ctx.clearRect(0,0,canvas.width,canvas.height)
-        // console.log("rendering background")
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -179,7 +176,6 @@ var Engine = (function(global) {
         'images/char-boy.png'
     ]);
     Resources.onReady(init);
-    Resources.onReady(console.log("bg resources ready"));
 
     /* Assign the canvas' context object to the global variable (the window
      * object when run in a browser) so that developers can use it more easily
