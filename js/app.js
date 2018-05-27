@@ -20,7 +20,7 @@ Enemy.prototype.update = function(dt) {
     this.x += (this.speed * dt);
     if (this.x > 520) {
         this.x = -60;
-        // AR - value of this.x here chosen so it appears enemy comes in from off-screen
+        // AR - value of this.x here chosen so it appears enemy bugs come in from off-screen
     }
 };
 
@@ -47,6 +47,7 @@ var Player = function() {
     this.sprite = 'images/char-boy.png';
     this.x = 200;
     this.y = 400;
+    // AR - x and y starting coordinates, places player at bottom centre of grid.
     this.speed = 1;
 
     // this.resetY = function () {
@@ -62,6 +63,9 @@ Player.prototype.update = function(dt) {
     // which will ensure the game runs at the same speed for
     // all computers.
     if (this.y < -15 ) {
+        //AR - this y coordinate corresponds to the top row of the play grid
+
+
         // console.log(this);
         // setTimeout((function() {this.y = 400;}).call(this), 2500);
         // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), should set a 500ms timeout or so before resetting
@@ -69,6 +73,10 @@ Player.prototype.update = function(dt) {
         setTimeout(reachGoal, 500);
         playerStart = 0;
        }
+       // AR - wrapping the timeout inside an if block here prevents the inner reachGoal function from being called multiple times in a row while the player position has yet to be reset
+
+
+
         // this.resetplayer.call(this);
 
         // AR - the function here must be a reference, without () else will be executed instantly
@@ -111,6 +119,7 @@ Player.prototype.handleInput = function(keyPress) {
     if (keyPress === 'right' && this.x < 400) {
         this.x += 100;
     }
+    // AR - the AND && conditionals prevent the player from moving off the grid
 };
 
 
@@ -151,10 +160,12 @@ function checkCollision() {
                 bugCollision();
             }
         }
+        // AR - collition detection here, with a vertical/horizontal range of collision so a rectangular 'hit box' is formed
     });
 }
 
 function reachGoal() {
+    // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
     if (textUpdate === 1) {
         textUpdate = 0;
         goalScore++;
@@ -164,6 +175,7 @@ function reachGoal() {
 }
 
 function bugCollision() {
+    // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
     if (textUpdate === 1) {
         textUpdate = 0;
         bugScore++;
