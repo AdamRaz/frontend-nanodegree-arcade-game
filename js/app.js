@@ -6,6 +6,9 @@ var Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
+    this.x = 10;
+    this.y = 45;
+    this.speed = 125;
 };
 
 // Update the enemy's position, required method for game
@@ -14,6 +17,11 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    this.x += (this.speed * dt);
+    if (this.x > 520) {
+        this.x = -60;
+        // AR - value of this.x here chosen so it appears enemy comes in from off-screen
+    }
 };
 
 // Draw the enemy on the screen, required method for game
@@ -26,9 +34,72 @@ Enemy.prototype.render = function() {
 // a handleInput() method.
 
 
+
+
+var Player = function() {
+    // Variables applied to each of our instances go here,
+    // we've provided one for you to get started
+
+    // The image/sprite for our player, this uses
+    // a helper we've provided to easily load images
+    this.sprite = 'images/char-boy.png';
+    this.x = 200;
+    this.y = 400;
+    this.speed = 1;
+};
+
+// Update the players's position, required method for game
+// Parameter: dt, a time delta between ticks
+Player.prototype.update = function(dt) {
+    // You should multiply any movement by the dt parameter
+    // which will ensure the game runs at the same speed for
+    // all computers.
+    if (this.y < -30) {
+        this.y = 400;
+        // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), should set a 500ms timeout or so before resetting
+    }
+};
+
+// Draw the player on the screen, required method for game
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+Player.prototype.handleInput = function(keyPress) {
+    // console.log(`keypress is ${keyPress}`);
+    if (keyPress === 'up' && this.y > -15) {
+        this.y -= 85;
+        console.log(`player y is ${this.y}`);
+    }
+    if (keyPress === 'down'&& this.y < 400) {
+        this.y += 85;
+    }
+    if (keyPress === 'left' && this.x > 10) {
+        this.x -= 100;
+    }
+    if (keyPress === 'right' && this.x < 400) {
+        this.x += 100;
+    }
+};
+
+
+
+
 // Now instantiate your objects.
+let enemy1 = new Enemy();
+console.log(enemy1);
+let enemy2 = new Enemy();
+enemy2.x = 100;
+enemy2.y = 130;
+enemy2.speed = 90;
+let enemy3 = new Enemy();
+enemy3.x = 300;
+enemy3.y = 215;
+enemy3.speed = 110;
 // Place all enemy objects in an array called allEnemies
+let allEnemies = [enemy1, enemy2, enemy3];
 // Place the player object in a variable called player
+let player = new Player();
 
 
 
