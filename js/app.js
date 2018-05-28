@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-var Enemy = function() {
+let Enemy = function() {
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/enemy-bug.png';
@@ -27,7 +27,7 @@ Enemy.prototype.render = function() {
 };
 
 
-var Player = function() {
+let Player = function() {
     // The image/sprite for our player, this uses
     // a helper we've provided to easily load images
     this.sprite = 'images/char-boy.png';
@@ -47,13 +47,13 @@ Player.prototype.update = function(dt) {
         //AR - this y coordinate corresponds to the top row of the play grid
        // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), we set a 500ms timeout before resetting so player can see themselves enter the water area before they teleport back to the start
        if (playerStart === 1) {
-        setTimeout(this.reachGoal, 500);
-        playerStart = 0;
+            setTimeout(this.reachGoal, 500);
+            playerStart = 0;
        }
        // AR - wrapping the timeout inside an if block here prevents the inner reachGoal function from being called multiple times in a row while the player position has yet to be reset
        // AR - the function here must be a reference, without () else will be executed instantly
     }
-    
+
     this.checkCollision();
 };
 
@@ -136,14 +136,14 @@ Player.prototype.bugCollision = function () {
         bugScore++;
         collisionMessage.textContent=`The bugs got you ${bugScore} time(s)!`;
     }
-    
+
     player.resetMainPlayer();
 }
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    let allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
