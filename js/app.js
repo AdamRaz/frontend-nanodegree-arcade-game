@@ -142,6 +142,7 @@ document.addEventListener('keydown', function(e) {
         39: 'right',
         40: 'down'
     };
+    // see https://stackoverflow.com/questions/8916620/disable-arrow-key-scrolling-in-users-browser
     e.preventDefault(); // prevents page view from scrolling from cursor key input
     player.handleInput(allowedKeys[e.keyCode]);
 });
