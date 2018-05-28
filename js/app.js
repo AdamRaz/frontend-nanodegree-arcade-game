@@ -47,14 +47,14 @@ Player.prototype.update = function(dt) {
         //AR - this y coordinate corresponds to the top row of the play grid
        // AR - value of this.y here chosen to reset player to beginning when player reaches water zone (goal), we set a 500ms timeout before resetting so player can see themselves enter the water area before they teleport back to the start
        if (playerStart === 1) {
-        setTimeout(reachGoal, 500);
+        setTimeout(this.reachGoal, 500);
         playerStart = 0;
        }
        // AR - wrapping the timeout inside an if block here prevents the inner reachGoal function from being called multiple times in a row while the player position has yet to be reset
        // AR - the function here must be a reference, without () else will be executed instantly
     }
     
-    checkCollision();
+    this.checkCollision();
 };
 
 
@@ -101,36 +101,35 @@ let textUpdate = 1;
 let goalMessage = document.querySelector('.goal-message');
 let collisionMessage = document.querySelector('.collision-message');
 
-function resetMainPlayer() {
-    player.x = 200;
-    player.y = 400;
+Player.prototype.resetMainPlayer = function () {
+    this.x = 200;
+    this.y = 400;
     textUpdate = 1;
     playerStart = 1
 }
 
-function checkCollision() {
+Player.prototype.checkCollision = function () {
     allEnemies.forEach(function(enemy) {
         if (Math.abs(player.y - enemy.y) < 20) {
             if (Math.abs(player.x - enemy.x) < 60) {
-                bugCollision();
+                player.bugCollision();
             }
         }
         // AR - collision detection here, with a vertical/horizontal range of collision so a rectangular 'hit box' is formed around each enemy bug
     });
 }
 
-function reachGoal() {
+Player.prototype.reachGoal = function () {
     // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
     if (textUpdate === 1) {
         textUpdate = 0;
         goalScore++;
         goalMessage.textContent=`Achieved happiness ${goalScore} time(s)!`;
     }
-    
-    resetMainPlayer();
+    player.resetMainPlayer();
 }
 
-function bugCollision() {
+Player.prototype.bugCollision = function () {
     // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
     if (textUpdate === 1) {
         textUpdate = 0;
@@ -138,7 +137,7 @@ function bugCollision() {
         collisionMessage.textContent=`The bugs got you ${bugScore} time(s)!`;
     }
     
-    resetMainPlayer();
+    player.resetMainPlayer();
 }
 
 // This listens for key presses and sends the keys to your
