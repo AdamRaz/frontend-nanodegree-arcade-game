@@ -97,14 +97,12 @@ Player.prototype.checkCollision = function () {
 }
 
 Player.prototype.reachGoal = function () {
-    // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
         goalScore++;
         goalMessage.textContent=`Achieved happiness ${goalScore} time(s)!`;
     this.resetMainPlayer();
 }
 
 Player.prototype.bugCollision = function () {
-    // AR - wrapping the text update inside an if block here prevents the inner code from being called multiple times in a row while the player position has yet to be reset
         bugScore++;
         collisionMessage.textContent=`The bugs got you ${bugScore} time(s)!`;
 
