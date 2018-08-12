@@ -1,5 +1,4 @@
 # Adam's frontend-nanodegree-arcade-game
-===============================
 
 This is based on a udacity nanodegree project assignment:
 
@@ -18,7 +17,7 @@ just the cursor keys: up/down/left/right
 
 ## how to run/play
 
-**see the live page at this github pages link: ** https://adamraz.github.io/frontend-nanodegree-arcade-game/
+**see the live page at this github pages link:** https://adamraz.github.io/frontend-nanodegree-arcade-game/
 
 
 OR clone the project  with `git clone <insert url here>` and open the index.html file in your browser
